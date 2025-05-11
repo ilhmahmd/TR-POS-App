@@ -129,5 +129,17 @@
   <ItemGroup>
     <None Include="user.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="t-shirt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="transaction.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="logout.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
