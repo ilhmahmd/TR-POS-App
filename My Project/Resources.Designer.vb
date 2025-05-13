@@ -63,9 +63,39 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property butlog() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("butlog", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property chart() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("chart", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property coverlog() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("coverlog", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property loginbar() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("loginbar", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -86,6 +116,16 @@ Namespace My.Resources
         Friend ReadOnly Property logout() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("logout", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Picsart_22_01_31_19_16_40_966() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Picsart_22-01-31_19-16-40-966", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

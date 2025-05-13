@@ -1,10 +1,6 @@
-﻿Public Class Form1
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Awal tampilan
-        RichTextBox1.Text = "Cari disini..."
-        RichTextBox1.ForeColor = Color.Gray
-    End Sub
+Public Class Form1
 
     Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles RichTextBox1.Enter
         If RichTextBox1.Text = "Cari disini..." Then
@@ -20,23 +16,32 @@
         End If
     End Sub
 
-    Private Sub RichTextBox1_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox1.TextChanged
+    ' Tidak perlu parameter karena ini memanggil kontrol di dalam form ini
 
+    ' Aktifkan tombol
+    Sub Terbuka()
+        buttonproduk.Enabled = True
+        buttontransaksi.Enabled = True
+        buttonuser.Enabled = True
+        buttonlogout.Enabled = True
+        buttonlaporan.Enabled = True
     End Sub
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-
+    Sub Terbuka2()
+        buttonproduk.Enabled = False
+        buttontransaksi.Enabled = True
+        buttonuser.Enabled = False
+        buttonlogout.Enabled = True
+        buttonlaporan.Enabled = True
     End Sub
 
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
+    Sub KondisiAwal()
+        login.TextBox1.Text = ""
+        login.TextBox2.Text = ""
     End Sub
-
-    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
-
-    End Sub
-
-    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
-
+    Private Sub buttonlogout_Click(sender As Object, e As EventArgs) Handles buttonlogout.Click
+        login.Show()
+        Call KondisiAwal()
+        Me.Close()
     End Sub
 End Class
