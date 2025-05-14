@@ -1,10 +1,13 @@
 ﻿Imports System.Data.Odbc
 
 Public Class login
+    Public Shared NamaPenggunaLogin As String ' Untuk menyimpan nama user ke global
+
     Sub KondisiAwal()
         TextBox1.Text = ""
         TextBox2.Text = ""
     End Sub
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If TextBox1.Text = "" Or TextBox2.Text = "" Then
             MsgBox("Kode Admin dan Password Tidak Boleh Kosong!")
@@ -16,25 +19,34 @@ Public Class login
             If Rd.HasRows Then
                 Dim level As String = Rd("leveladmin").ToString().ToLower()
                 Dim username As String = Rd("kodeadmin").ToString()
-                Dim name As String = Rd("namaadmin").ToString() ' Ambil username (kodeadmin)
+                Dim name As String = Rd("namaadmin").ToString()
 
-                ' Menyembunyikan form login dan menampilkan Form1
+                ' Simpan nama untuk ditampilkan di form lain
+                NamaPenggunaLogin = name
+
+                ' Buka form utama dan set label
                 Me.Hide()
-                Form1.Show()
-
-                ' Ubah label di Form1 dengan nama pengguna
                 Form1.Label1User.Text = name
-                Form1.Label2.Text = level ' LabelUser adalah label di Form1 yang menampilkan nama
+                Form1.Label2.Text = level
 
+                ' Panggil metode sesuai level
                 If level = "admin" Then
                     Form1.Terbuka()
-                ElseIf level = "user" Then
+                ElseIf level = "kasir" Then
                     Form1.Terbuka2()
                 Else
                     MsgBox("Level user tidak dikenali.")
+                    Call KondisiAwal()
+                    Exit Sub
                 End If
+
+                ' Tampilkan Form1 dan langsung load ucDasbor
+                Form1.Show()
+                Form1.LoadKontenKontrol(New ucDasbor()) ' ← tampilkan dasbor langsung
+
             Else
                 MsgBox("Username atau Password Salah!")
+                Call KondisiAwal()
             End If
         End If
     End Sub

@@ -81,6 +81,12 @@
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormBarang.Designer.vb">
+      <DependentUpon>FormBarang.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormBarang.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="login.Designer.vb">
       <DependentUpon>login.vb</DependentUpon>
     </Compile>
@@ -104,10 +110,37 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ucDasbor.Designer.vb">
+      <DependentUpon>ucDasbor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucDasbor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucLapor.Designer.vb">
+      <DependentUpon>ucLapor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucLapor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucProduk.Designer.vb">
+      <DependentUpon>ucProduk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucProduk.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucTrans.Designer.vb">
+      <DependentUpon>ucTrans.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucTrans.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBarang.resx">
+      <DependentUpon>FormBarang.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="login.resx">
       <DependentUpon>login.vb</DependentUpon>
@@ -117,6 +150,18 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucDasbor.resx">
+      <DependentUpon>ucDasbor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucLapor.resx">
+      <DependentUpon>ucLapor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucProduk.resx">
+      <DependentUpon>ucProduk.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucTrans.resx">
+      <DependentUpon>ucTrans.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +208,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="butlog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dashboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="manage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

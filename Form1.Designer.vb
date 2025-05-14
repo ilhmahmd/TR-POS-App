@@ -26,34 +26,38 @@ Partial Class Form1
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1User = New System.Windows.Forms.Label()
-        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.DirectorySearcher1 = New System.DirectoryServices.DirectorySearcher()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
+        Me.buttonDasbor = New System.Windows.Forms.Button()
         Me.buttonuser = New System.Windows.Forms.Button()
-        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.buttonlogout = New System.Windows.Forms.Button()
         Me.buttonlaporan = New System.Windows.Forms.Button()
         Me.buttontransaksi = New System.Windows.Forms.Button()
         Me.buttonproduk = New System.Windows.Forms.Button()
+        Me.PanelMain = New System.Windows.Forms.Panel()
+        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.Panel1.SuspendLayout()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -94,27 +98,6 @@ Partial Class Form1
         Me.Label1User.TabIndex = 6
         Me.Label1User.Text = "Nama Kasir"
         '
-        'PictureBox3
-        '
-        Me.PictureBox3.Image = Global.TR_POS_App.My.Resources.Resources.user
-        Me.PictureBox3.Location = New System.Drawing.Point(960, 28)
-        Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(35, 40)
-        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox3.TabIndex = 5
-        Me.PictureBox3.TabStop = False
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox1.Image = Global.TR_POS_App.My.Resources.Resources.logo
-        Me.PictureBox1.Location = New System.Drawing.Point(39, 21)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(122, 57)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 3
-        Me.PictureBox1.TabStop = False
-        '
         'RichTextBox1
         '
         Me.RichTextBox1.BackColor = System.Drawing.Color.White
@@ -145,16 +128,6 @@ Partial Class Form1
         Me.Button1.Text = "Cari"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'PictureBox2
-        '
-        Me.PictureBox2.Image = Global.TR_POS_App.My.Resources.Resources.search
-        Me.PictureBox2.Location = New System.Drawing.Point(240, 26)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(262, 50)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox2.TabIndex = 4
-        Me.PictureBox2.TabStop = False
-        '
         'DirectorySearcher1
         '
         Me.DirectorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01")
@@ -164,6 +137,8 @@ Partial Class Form1
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Panel2.Controls.Add(Me.PictureBox9)
+        Me.Panel2.Controls.Add(Me.buttonDasbor)
         Me.Panel2.Controls.Add(Me.PictureBox8)
         Me.Panel2.Controls.Add(Me.buttonuser)
         Me.Panel2.Controls.Add(Me.PictureBox7)
@@ -180,15 +155,19 @@ Partial Class Form1
         Me.Panel2.Size = New System.Drawing.Size(188, 535)
         Me.Panel2.TabIndex = 1
         '
-        'PictureBox8
+        'buttonDasbor
         '
-        Me.PictureBox8.Image = Global.TR_POS_App.My.Resources.Resources.chart
-        Me.PictureBox8.Location = New System.Drawing.Point(49, 432)
-        Me.PictureBox8.Name = "PictureBox8"
-        Me.PictureBox8.Size = New System.Drawing.Size(24, 23)
-        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox8.TabIndex = 8
-        Me.PictureBox8.TabStop = False
+        Me.buttonDasbor.BackColor = System.Drawing.Color.Transparent
+        Me.buttonDasbor.FlatAppearance.BorderSize = 0
+        Me.buttonDasbor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.buttonDasbor.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.buttonDasbor.Location = New System.Drawing.Point(78, 21)
+        Me.buttonDasbor.Name = "buttonDasbor"
+        Me.buttonDasbor.Size = New System.Drawing.Size(95, 34)
+        Me.buttonDasbor.TabIndex = 9
+        Me.buttonDasbor.Text = "Dasbor"
+        Me.buttonDasbor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.buttonDasbor.UseVisualStyleBackColor = False
         '
         'buttonuser
         '
@@ -203,46 +182,6 @@ Partial Class Form1
         Me.buttonuser.Text = "Kelola"
         Me.buttonuser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.buttonuser.UseVisualStyleBackColor = False
-        '
-        'PictureBox7
-        '
-        Me.PictureBox7.Image = Global.TR_POS_App.My.Resources.Resources.logout
-        Me.PictureBox7.Location = New System.Drawing.Point(51, 469)
-        Me.PictureBox7.Name = "PictureBox7"
-        Me.PictureBox7.Size = New System.Drawing.Size(24, 23)
-        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox7.TabIndex = 6
-        Me.PictureBox7.TabStop = False
-        '
-        'PictureBox6
-        '
-        Me.PictureBox6.Image = Global.TR_POS_App.My.Resources.Resources.chart
-        Me.PictureBox6.Location = New System.Drawing.Point(49, 113)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(24, 23)
-        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox6.TabIndex = 5
-        Me.PictureBox6.TabStop = False
-        '
-        'PictureBox5
-        '
-        Me.PictureBox5.Image = Global.TR_POS_App.My.Resources.Resources.transaction
-        Me.PictureBox5.Location = New System.Drawing.Point(49, 73)
-        Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(24, 23)
-        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox5.TabIndex = 4
-        Me.PictureBox5.TabStop = False
-        '
-        'PictureBox4
-        '
-        Me.PictureBox4.Image = Global.TR_POS_App.My.Resources.Resources.t_shirt
-        Me.PictureBox4.Location = New System.Drawing.Point(49, 33)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(24, 23)
-        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox4.TabIndex = 2
-        Me.PictureBox4.TabStop = False
         '
         'buttonlogout
         '
@@ -264,7 +203,7 @@ Partial Class Form1
         Me.buttonlaporan.FlatAppearance.BorderSize = 0
         Me.buttonlaporan.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.buttonlaporan.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.buttonlaporan.Location = New System.Drawing.Point(78, 107)
+        Me.buttonlaporan.Location = New System.Drawing.Point(78, 141)
         Me.buttonlaporan.Name = "buttonlaporan"
         Me.buttonlaporan.Size = New System.Drawing.Size(95, 34)
         Me.buttonlaporan.TabIndex = 2
@@ -278,7 +217,7 @@ Partial Class Form1
         Me.buttontransaksi.FlatAppearance.BorderSize = 0
         Me.buttontransaksi.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.buttontransaksi.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.buttontransaksi.Location = New System.Drawing.Point(78, 67)
+        Me.buttontransaksi.Location = New System.Drawing.Point(78, 101)
         Me.buttontransaksi.Name = "buttontransaksi"
         Me.buttontransaksi.Size = New System.Drawing.Size(95, 34)
         Me.buttontransaksi.TabIndex = 1
@@ -292,7 +231,7 @@ Partial Class Form1
         Me.buttonproduk.FlatAppearance.BorderSize = 0
         Me.buttonproduk.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.buttonproduk.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.buttonproduk.Location = New System.Drawing.Point(78, 27)
+        Me.buttonproduk.Location = New System.Drawing.Point(78, 61)
         Me.buttonproduk.Name = "buttonproduk"
         Me.buttonproduk.Size = New System.Drawing.Size(95, 34)
         Me.buttonproduk.TabIndex = 0
@@ -300,12 +239,112 @@ Partial Class Form1
         Me.buttonproduk.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.buttonproduk.UseVisualStyleBackColor = False
         '
+        'PanelMain
+        '
+        Me.PanelMain.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PanelMain.Location = New System.Drawing.Point(188, 104)
+        Me.PanelMain.Name = "PanelMain"
+        Me.PanelMain.Size = New System.Drawing.Size(993, 535)
+        Me.PanelMain.TabIndex = 2
+        '
+        'PictureBox9
+        '
+        Me.PictureBox9.Image = Global.TR_POS_App.My.Resources.Resources.dashboard
+        Me.PictureBox9.Location = New System.Drawing.Point(49, 27)
+        Me.PictureBox9.Name = "PictureBox9"
+        Me.PictureBox9.Size = New System.Drawing.Size(24, 23)
+        Me.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox9.TabIndex = 10
+        Me.PictureBox9.TabStop = False
+        '
+        'PictureBox8
+        '
+        Me.PictureBox8.Image = Global.TR_POS_App.My.Resources.Resources.manage
+        Me.PictureBox8.Location = New System.Drawing.Point(49, 432)
+        Me.PictureBox8.Name = "PictureBox8"
+        Me.PictureBox8.Size = New System.Drawing.Size(24, 23)
+        Me.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox8.TabIndex = 8
+        Me.PictureBox8.TabStop = False
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = Global.TR_POS_App.My.Resources.Resources.logout
+        Me.PictureBox7.Location = New System.Drawing.Point(51, 469)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(24, 23)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox7.TabIndex = 6
+        Me.PictureBox7.TabStop = False
+        '
+        'PictureBox6
+        '
+        Me.PictureBox6.Image = Global.TR_POS_App.My.Resources.Resources.chart
+        Me.PictureBox6.Location = New System.Drawing.Point(49, 147)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(24, 23)
+        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox6.TabIndex = 5
+        Me.PictureBox6.TabStop = False
+        '
+        'PictureBox5
+        '
+        Me.PictureBox5.Image = Global.TR_POS_App.My.Resources.Resources.transaction
+        Me.PictureBox5.Location = New System.Drawing.Point(49, 107)
+        Me.PictureBox5.Name = "PictureBox5"
+        Me.PictureBox5.Size = New System.Drawing.Size(24, 23)
+        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox5.TabIndex = 4
+        Me.PictureBox5.TabStop = False
+        '
+        'PictureBox4
+        '
+        Me.PictureBox4.Image = Global.TR_POS_App.My.Resources.Resources.t_shirt
+        Me.PictureBox4.Location = New System.Drawing.Point(49, 67)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(24, 23)
+        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox4.TabIndex = 2
+        Me.PictureBox4.TabStop = False
+        '
+        'PictureBox3
+        '
+        Me.PictureBox3.Image = Global.TR_POS_App.My.Resources.Resources.user
+        Me.PictureBox3.Location = New System.Drawing.Point(960, 28)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(35, 40)
+        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox3.TabIndex = 5
+        Me.PictureBox3.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox1.Image = Global.TR_POS_App.My.Resources.Resources.logo
+        Me.PictureBox1.Location = New System.Drawing.Point(39, 21)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(122, 57)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 3
+        Me.PictureBox1.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = Global.TR_POS_App.My.Resources.Resources.search
+        Me.PictureBox2.Location = New System.Drawing.Point(240, 26)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(262, 50)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 4
+        Me.PictureBox2.TabStop = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Snow
         Me.ClientSize = New System.Drawing.Size(1181, 639)
+        Me.Controls.Add(Me.PanelMain)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "Form1"
@@ -313,15 +352,16 @@ Partial Class Form1
         Me.Text = "POS TR"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
+        CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -348,4 +388,7 @@ Partial Class Form1
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents buttonuser As Button
+    Friend WithEvents PanelMain As Panel
+    Friend WithEvents PictureBox9 As PictureBox
+    Friend WithEvents buttonDasbor As Button
 End Class

@@ -44,4 +44,30 @@ Public Class Form1
         Call KondisiAwal()
         Me.Close()
     End Sub
+
+    Public Sub LoadKontenKontrol(kontrol As UserControl)
+        PanelMain.Controls.Clear()
+        kontrol.Dock = DockStyle.Fill
+        PanelMain.Controls.Add(kontrol)
+    End Sub
+
+    Private Sub buttonproduk_Click(sender As Object, e As EventArgs) Handles buttonproduk.Click
+        Dim produk As New ucProduk()
+        LoadKontenKontrol(produk)
+    End Sub
+
+    Private Sub buttonDasbor_Click(sender As Object, e As EventArgs) Handles buttonDasbor.Click
+        Dim dasbor As New ucDasbor()
+        LoadKontenKontrol(dasbor)
+    End Sub
+
+    Private Sub buttontransaksi_Click(sender As Object, e As EventArgs) Handles buttontransaksi.Click
+        Dim transaksi As New ucTrans()
+        LoadKontenKontrol(transaksi)
+    End Sub
+
+    Private Sub buttonlaporan_Click(sender As Object, e As EventArgs) Handles buttonlaporan.Click
+        Dim laporan As New ucLapor()
+        LoadKontenKontrol(laporan)
+    End Sub
 End Class
