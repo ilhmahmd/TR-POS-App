@@ -1,6 +1,7 @@
 ﻿Imports System.Data.Odbc
 
 Public Class FormBarang
+
     Private TableLayoutPanel1 As New TableLayoutPanel()
     Private txtKode As New TextBox()
     Private txtNama As New TextBox()
@@ -12,9 +13,11 @@ Public Class FormBarang
     Public ModeEdit As Boolean = False
     Public KodeBarangEdit As String = ""
 
+    ' Properti untuk menerima referensi ke instance ucProduk
+    Public Property UcProdukInstance As ucProduk
+
     Private Sub FormBarang_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = If(ModeEdit, "Edit Barang", "Tambah Barang")
-        ' Me.BackColor = Color.FromArgb(255, 240, 240) ' Hapus pengaturan warna background
         Me.Font = New Font("Segoe UI", 9)
         Me.AutoSize = False
         Me.Size = New Size(300, 220) ' Ukuran form yang lebih kecil
@@ -121,6 +124,10 @@ Public Class FormBarang
             End If
         Catch ex As Exception
             MessageBox.Show("Gagal memuat data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            If Conn.State = ConnectionState.Open Then
+                Conn.Close()
+            End If
         End Try
     End Sub
 
@@ -161,8 +168,18 @@ Public Class FormBarang
                 MessageBox.Show("Data berhasil disimpan.")
             End If
             Me.Close()
+
+            ' Panggil TampilkanData() melalui instance ucProduk
+            If UcProdukInstance IsNot Nothing Then
+                UcProdukInstance.TampilkanData()
+            End If
+
         Catch ex As Exception
             MessageBox.Show("Gagal menyimpan data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            If Conn.State = ConnectionState.Open Then
+                Conn.Close()
+            End If
         End Try
     End Sub
 End Class
