@@ -45,6 +45,7 @@ Partial Class ucProduk
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Label2.Location = New System.Drawing.Point(-7, 63)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(18, 25)
@@ -53,8 +54,8 @@ Partial Class ucProduk
         '
         'Button1
         '
-        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(850, 54)
+        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Location = New System.Drawing.Point(858, 54)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 34)
         Me.Button1.TabIndex = 4
@@ -63,8 +64,9 @@ Partial Class ucProduk
         '
         'dgvProduk
         '
+        Me.dgvProduk.BackgroundColor = System.Drawing.Color.White
         Me.dgvProduk.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvProduk.Location = New System.Drawing.Point(44, 108)
+        Me.dgvProduk.Location = New System.Drawing.Point(51, 108)
         Me.dgvProduk.Name = "dgvProduk"
         Me.dgvProduk.Size = New System.Drawing.Size(881, 357)
         Me.dgvProduk.TabIndex = 5

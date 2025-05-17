@@ -44,25 +44,25 @@ Public Class ucProduk
                         .Font = New Font("Segoe UI", 9, FontStyle.Bold),
                         .Alignment = DataGridViewContentAlignment.MiddleCenter,
                         .Padding = New Padding(2)
-                    }
-                }
+                 }
+            }
             dgvProduk.Columns.Add(btnEdit)
 
             ' Kolom tombol Hapus
             Dim btnHapus As New DataGridViewButtonColumn With {
-    .Name = "HapusColumn",
-    .HeaderText = "",
-    .Text = "Hapus",
-    .UseColumnTextForButtonValue = True,
-    .Width = 90,
-    .DefaultCellStyle = New DataGridViewCellStyle With {
-        .BackColor = Color.IndianRed,
-        .ForeColor = Color.White,
-        .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-        .Alignment = DataGridViewContentAlignment.MiddleCenter,
-        .Padding = New Padding(2)
-    }
-}
+                .Name = "HapusColumn",
+                .HeaderText = "",
+                .Text = "Hapus",
+                .UseColumnTextForButtonValue = True,
+                .Width = 90,
+                .DefaultCellStyle = New DataGridViewCellStyle With {
+                    .BackColor = Color.IndianRed,
+                    .ForeColor = Color.White,
+                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                    .Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    .Padding = New Padding(2)
+                }
+            }
             dgvProduk.Columns.Add(btnHapus)
 
 
@@ -89,7 +89,7 @@ Public Class ucProduk
                 ' Ubah header text sesuai keinginan, tidak perlu sesuai nama kolom DB
                 .Columns("kodebarang").HeaderText = "Kode Barang"
                 .Columns("namabarang").HeaderText = "Nama Barang"
-                .Columns("hargabarang").HeaderText = "Harga (Rp)"
+                .Columns("hargabarang").HeaderText = "Harga"
                 .Columns("jumlahbarang").HeaderText = "Jumlah Stok"
 
                 ' Style header
@@ -129,6 +129,7 @@ Public Class ucProduk
         If e.RowIndex < 0 Then Exit Sub ' Abaikan klik header
 
         Dim kode As String = dgvProduk.Rows(e.RowIndex).Cells("kodebarang").Value.ToString()
+        Dim nama As String = dgvProduk.Rows(e.RowIndex).Cells("namabarang").Value.ToString()
 
         ' Jika klik tombol Edit
         If e.ColumnIndex = dgvProduk.Columns("EditColumn").Index Then
@@ -140,7 +141,7 @@ Public Class ucProduk
 
             ' Jika klik tombol Hapus
         ElseIf e.ColumnIndex = dgvProduk.Columns("HapusColumn").Index Then
-            If MessageBox.Show("Yakin ingin menghapus barang dengan kode: " & kode & "?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            If MessageBox.Show("Yakin ingin menghapus barang : " & nama & "?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 Try
                     Call Koneksi()
                     Using cmd As New OdbcCommand("DELETE FROM barang WHERE kodebarang = ?", Conn)
@@ -283,7 +284,7 @@ Public Class ucProduk
             End If
             If .Columns.Contains("hargabarang") Then
                 .Columns("hargabarang").Width = 150
-                .Columns("hargabarang").HeaderText = "Harga (Rp)"
+                .Columns("hargabarang").HeaderText = "Harga"
                 .Columns("hargabarang").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             End If
             If .Columns.Contains("jumlahbarang") Then
@@ -305,8 +306,5 @@ Public Class ucProduk
             .AllowUserToResizeColumns = True
         End With
     End Sub
-
-
-
 
 End Class

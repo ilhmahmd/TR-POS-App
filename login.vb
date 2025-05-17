@@ -2,6 +2,7 @@
 
 Public Class login
     Public Shared NamaPenggunaLogin As String ' Untuk menyimpan nama user ke global
+    Public Shared KodeAdminLogin As String    ' Untuk menyimpan kode admin ke global
 
     Sub KondisiAwal()
         TextBox1.Text = ""
@@ -21,8 +22,9 @@ Public Class login
                 Dim username As String = Rd("kodeadmin").ToString()
                 Dim name As String = Rd("namaadmin").ToString()
 
-                ' Simpan nama untuk ditampilkan di form lain
+                ' Simpan informasi login
                 NamaPenggunaLogin = name
+                KodeAdminLogin = username ' Simpan kode admin juga
 
                 ' Buka form utama dan set label
                 Me.Hide()

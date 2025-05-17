@@ -149,7 +149,7 @@ Partial Class login
         Me.Controls.Add(Me.PictureBox3)
         Me.Name = "login"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "login"
+        Me.Text = "Login - Tampilan Rakyat"
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()

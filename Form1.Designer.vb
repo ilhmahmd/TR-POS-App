@@ -237,7 +237,7 @@ Partial Class Form1
         'PictureBox7
         '
         Me.PictureBox7.Image = Global.TR_POS_App.My.Resources.Resources.logout
-        Me.PictureBox7.Location = New System.Drawing.Point(51, 469)
+        Me.PictureBox7.Location = New System.Drawing.Point(49, 469)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(24, 23)
         Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -349,7 +349,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Panel1)
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "POS TR"
+        Me.Text = "POS Tampilan Rakyat"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()

@@ -17,9 +17,6 @@ Public Class Form1
     End Sub
 
 
-
-    ' Tidak perlu parameter karena ini memanggil kontrol di dalam form ini
-
     ' Aktifkan tombol
     Sub Terbuka()
         buttonproduk.Enabled = True
@@ -42,10 +39,20 @@ Public Class Form1
         login.TextBox2.Text = ""
     End Sub
     Private Sub buttonlogout_Click(sender As Object, e As EventArgs) Handles buttonlogout.Click
-        login.Show()
-        Call KondisiAwal()
-        Me.Close()
+        Dim result As DialogResult = MessageBox.Show(
+        "Apakah Anda yakin ingin logout?",
+        "Konfirmasi Logout",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question
+    )
+
+        If result = DialogResult.Yes Then
+            login.Show()
+            Call KondisiAwal()
+            Me.Close()
+        End If
     End Sub
+
 
     Public Sub LoadKontenKontrol(kontrol As UserControl)
         PanelMain.Controls.Clear()
@@ -96,6 +103,17 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub txtCari_TextChanged2(sender As Object, e As EventArgs) Handles txtCari.TextChanged
+        Dim keyword As String = txtCari.Text.Trim()
+
+        ' Jika textbox kosong, tampilkan data full
+        If keyword = "" Or keyword = "Cari disini..." Then
+            ResetFilter2()
+        Else
+            FilterData2(keyword)
+        End If
+    End Sub
+
     Private Sub txtCari_KeyDown(sender As Object, e As KeyEventArgs) Handles txtCari.KeyDown
         If e.KeyCode = Keys.Enter Then
             Dim keyword As String = txtCari.Text.Trim()
@@ -126,7 +144,28 @@ Public Class Form1
         Next
     End Sub
 
+    Private Sub FilterData2(keyword As String)
+        ' Cek UserControl ucProduk yang aktif di panel
+        For Each ctrl As Control In PanelMain.Controls
+            If TypeOf ctrl Is ucTrans Then
+                Dim produk As ucTrans = CType(ctrl, ucTrans)
+                produk.FilterData2(keyword)
+                Exit For
+            End If
+        Next
+    End Sub
 
+    Private Sub ResetFilter2()
+        For Each ctrl As Control In PanelMain.Controls
+            If TypeOf ctrl Is ucTrans Then
+                Dim produk As ucTrans = CType(ctrl, ucTrans)
+                produk.TampilkanData() ' load data tanpa filter (full)
+                Exit For
+            End If
+        Next
+    End Sub
 
+    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
 
+    End Sub
 End Class
