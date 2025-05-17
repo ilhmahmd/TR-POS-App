@@ -3,6 +3,7 @@ Imports System.Drawing
 Imports System.Drawing.Printing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports System.IO
 
 Public Class ucTrans
 
@@ -517,69 +518,104 @@ Public Class ucTrans
     Private jumlahTunaiUntukDicetak As Decimal
     Private kembalianUntukDicetak As Decimal
 
-    ' Event handler untuk menggambar halaman yang akan dicetak
     Private Sub pd_PrintPage(sender As Object, e As PrintPageEventArgs)
-        Dim fontHeader As New Font("Arial", 12, FontStyle.Bold)
-        Dim fontBody As New Font("Arial", 10, FontStyle.Regular)
-        Dim fontBoldBody As New Font("Arial", 10, FontStyle.Bold)
+        ' --- Konfigurasi Font ---
+        Dim fontHeader As New Font("Segoe UI", 10, FontStyle.Bold)
+        Dim fontBody As New Font("Segoe UI", 8, FontStyle.Regular)
+        Dim fontBoldBody As New Font("Segoe UI", 8, FontStyle.Bold)
+        Dim garis As String = "--------------------------------------------" ' Garis lebih panjang
+
+        ' --- Ukuran Kertas (Estimasi Lebar Cetak Efektif) ---
+        Dim paperWidth As Single = 58 * 3.77953 ' Konversi mm ke titik (1mm ≈ 3.77953 titik)
+        Dim printAreaWidth As Single = paperWidth - 20 ' Estimasi margin kiri dan kanan
+
+        Dim xLeft As Single = e.MarginBounds.Left
         Dim y As Single = e.MarginBounds.Top
-        Dim garis As String = "----------------------------------------"
+        Dim yIncrement As Single = fontBody.GetHeight(e.Graphics) + 2 ' Jarak antar baris
 
-        ' Judul Struk
-        Dim judul As String = "Struk Pembelian"
-        Dim judulLebar As Single = e.Graphics.MeasureString(judul, fontHeader).Width
-        e.Graphics.DrawString(judul, fontHeader, Brushes.Black, e.MarginBounds.Left + (e.MarginBounds.Width - judulLebar) / 2, y)
-        y += fontHeader.GetHeight(e.Graphics) + 5
+        ' --- Cetak Logo ---
+        Try
+            Dim logoPath As String = "D:\VB Porto\TR New Version\TR POS App\logo.png"
+            Dim logo As Image = Image.FromFile(logoPath)
+            Dim logoAspectRatio As Single = CSng(logo.Width) / CSng(logo.Height)
+            Dim logoHeight As Integer = 35 ' Tinggi logo (sesuaikan)
+            Dim logoWidth As Integer = CInt(logoHeight * logoAspectRatio)
 
-        ' Informasi Transaksi
-        e.Graphics.DrawString($"ID Transaksi: {transaksiUntukDicetakID}", fontBody, Brushes.Black, e.MarginBounds.Left, y)
-        y += fontBody.GetHeight(e.Graphics)
-        e.Graphics.DrawString($"Tanggal: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}", fontBody, Brushes.Black, e.MarginBounds.Left, y)
-        y += fontBody.GetHeight(e.Graphics)
-        e.Graphics.DrawString(garis, fontBody, Brushes.Black, e.MarginBounds.Left, y)
-        y += fontBody.GetHeight(e.Graphics)
+            ' Center the logo
+            Dim logoX As Single = xLeft + (printAreaWidth - logoWidth) / 2
+            e.Graphics.DrawImage(logo, logoX, y, logoWidth, logoHeight)
+            y += logoHeight + 5
+        Catch ex As Exception
+            ' Jika logo gagal dimuat, lewati saja atau tampilkan pesan error
+            Debug.WriteLine($"Error loading logo: {ex.Message}")
+            e.Graphics.DrawString("Logo Gagal Dimuat", fontBody, Brushes.Red, xLeft, y) ' Tampilkan pesan jika logo gagal
+            y += yIncrement
+        End Try
 
-        ' Daftar Barang
-        e.Graphics.DrawString("Barang", fontBoldBody, Brushes.Black, e.MarginBounds.Left, y)
-        e.Graphics.DrawString("Jumlah", fontBoldBody, Brushes.Black, e.MarginBounds.Left + 200, y)
-        e.Graphics.DrawString("Subtotal", fontBoldBody, Brushes.Black, e.MarginBounds.Left + 250, y, New StringFormat With {.Alignment = StringAlignment.Far})
+        ' --- Informasi Transaksi ---
+        e.Graphics.DrawString($"Id : {transaksiUntukDicetakID}", fontBody, Brushes.Black, xLeft, y)
+        y += yIncrement
+        e.Graphics.DrawString($"Tgl : {DateTime.Now.ToString("dd/MM/yyyy")}", fontBody, Brushes.Black, xLeft, y)
+        y += yIncrement
+        e.Graphics.DrawString(garis, fontBody, Brushes.Black, xLeft, y)
+        y += yIncrement
+
+        ' --- Daftar Barang (3 Kolom: Barang, Jumlah, Harga) ---
+        Dim barangColumnWidth As Single = printAreaWidth * 0.5 ' Lebar untuk kolom Barang
+        Dim jumlahColumnWidth As Single = printAreaWidth * 0.2 ' Lebar untuk kolom Jumlah
+        Dim hargaColumnWidth As Single = printAreaWidth * 0.3 ' Lebar untuk kolom Harga
+        Dim jumlahX As Single = xLeft + barangColumnWidth
+        ' Atur posisi Harga agar rata kanan
+        Dim hargaX As Single = printAreaWidth + xLeft - e.Graphics.MeasureString("Harga", fontBoldBody).Width
+
+        e.Graphics.DrawString("Barang", fontBoldBody, Brushes.Black, xLeft, y)
+        e.Graphics.DrawString("Jumlah", fontBoldBody, Brushes.Black, jumlahX, y, New StringFormat With {.Alignment = StringAlignment.Near})
+        e.Graphics.DrawString("Harga", fontBoldBody, Brushes.Black, hargaX, y, New StringFormat With {.Alignment = StringAlignment.Near})
         y += fontBoldBody.GetHeight(e.Graphics)
-        e.Graphics.DrawString(garis, fontBody, Brushes.Black, e.MarginBounds.Left, y)
-        y += fontBody.GetHeight(e.Graphics)
+        e.Graphics.DrawString(garis, fontBody, Brushes.Black, xLeft, y)
+        y += yIncrement
 
         For Each item As OrderItem In daftarBarangUntukDicetak
-            e.Graphics.DrawString(item.NamaBarang, fontBody, Brushes.Black, e.MarginBounds.Left, y)
-            e.Graphics.DrawString(item.JumlahBeli.ToString(), fontBody, Brushes.Black, e.MarginBounds.Left + 200, y)
-            e.Graphics.DrawString($"Rp {item.Subtotal:N0}", fontBody, Brushes.Black, e.MarginBounds.Left + 250, y, New StringFormat With {.Alignment = StringAlignment.Far})
-            y += fontBody.GetHeight(e.Graphics)
+            ' Nama Barang
+            Dim barangText As String = item.NamaBarang
+            If e.Graphics.MeasureString(barangText, fontBody).Width > barangColumnWidth - 5 Then
+                Dim charsThatFit As Integer = 0
+                Do While charsThatFit < barangText.Length AndAlso e.Graphics.MeasureString(barangText.Substring(0, charsThatFit + 1), fontBody).Width < barangColumnWidth - 5
+                    charsThatFit += 1
+                Loop
+                barangText = barangText.Substring(0, charsThatFit) & "..."
+            End If
+            e.Graphics.DrawString(barangText, fontBody, Brushes.Black, xLeft, y)
+
+            ' Jumlah
+            e.Graphics.DrawString(item.JumlahBeli.ToString(), fontBody, Brushes.Black, jumlahX, y, New StringFormat With {.Alignment = StringAlignment.Near})
+
+            ' Harga (rata kanan)
+            e.Graphics.DrawString($"{item.Harga:N0}", fontBody, Brushes.Black, printAreaWidth + xLeft, y, New StringFormat With {.Alignment = StringAlignment.Far})
+
+            y += yIncrement
         Next
 
-        e.Graphics.DrawString(garis, fontBody, Brushes.Black, e.MarginBounds.Left, y)
-        y += fontBody.GetHeight(e.Graphics)
+        e.Graphics.DrawString(garis, fontBody, Brushes.Black, xLeft, y)
+        y += yIncrement
 
-        ' Total Harga
-        e.Graphics.DrawString("Total:", fontBoldBody, Brushes.Black, e.MarginBounds.Left + 150, y)
-        e.Graphics.DrawString($"Rp {totalHargaUntukDicetak:N0}", fontBoldBody, Brushes.Black, e.MarginBounds.Left + 250, y, New StringFormat With {.Alignment = StringAlignment.Far})
+        ' --- Total Harga ---
+        Dim totalLabelX As Single = printAreaWidth * 0.5 + xLeft ' Sesuaikan posisi label Total
+        Dim totalValueX As Single = printAreaWidth + xLeft
+
+        e.Graphics.DrawString("Total", fontBoldBody, Brushes.Black, totalLabelX, y)
+        e.Graphics.DrawString($"{totalHargaUntukDicetak:N0}", fontBoldBody, Brushes.Black, totalValueX, y, New StringFormat With {.Alignment = StringAlignment.Far})
         y += fontBoldBody.GetHeight(e.Graphics) + 5
 
-        ' Metode Pembayaran
-        e.Graphics.DrawString($"Metode Bayar: {metodeBayarUntukDicetak}", fontBody, Brushes.Black, e.MarginBounds.Left, y)
-        y += fontBody.GetHeight(e.Graphics)
+        ' --- Metode Pembayaran ---
+        e.Graphics.DrawString($"Bayar : {metodeBayarUntukDicetak}", fontBody, Brushes.Black, xLeft, y)
+        y += yIncrement + 5
 
-        ' Informasi Tambahan untuk Tunai
-        If metodeBayarUntukDicetak = "Tunai" Then
-            e.Graphics.DrawString($"Tunai Diberikan: Rp {jumlahTunaiUntukDicetak:N0}", fontBody, Brushes.Black, e.MarginBounds.Left, y)
-            y += fontBody.GetHeight(e.Graphics)
-            e.Graphics.DrawString($"Kembalian: Rp {kembalianUntukDicetak:N0}", fontBoldBody, Brushes.Black, e.MarginBounds.Left, y)
-            y += fontBoldBody.GetHeight(e.Graphics) + 5
-        End If
-
-        ' Pesan Penutup
-        Dim pesan As String = "Terima Kasih Atas Kunjungan Anda!"
+        ' --- Pesan Penutup ---
+        Dim pesan As String = "Terima Kasih telah Berbelanja!"
         Dim pesanLebar As Single = e.Graphics.MeasureString(pesan, fontBody).Width
-        e.Graphics.DrawString(pesan, fontBody, Brushes.Black, e.MarginBounds.Left + (e.MarginBounds.Width - pesanLebar) / 2, y)
+        e.Graphics.DrawString(pesan, fontBody, Brushes.Black, xLeft + (printAreaWidth - pesanLebar) / 2, y)
 
-        ' Tentukan apakah ada halaman lain untuk dicetak (biasanya False untuk struk sederhana)
         e.HasMorePages = False
     End Sub
 
