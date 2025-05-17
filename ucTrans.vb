@@ -90,50 +90,55 @@ Public Class ucTrans
     Sub TampilkanData(Optional filter As String = "")
         Try
             Call Koneksi()
-            Dim query As String = "SELECT kodebarang, namabarang, hargabarang, jumlahbarang FROM barang WHERE jumlahbarang > 0" ' Tambahkan klausa WHERE
-            If filter <> "" Then
-                query &= " AND (kodebarang LIKE ? OR namabarang LIKE ?)" ' Tambahkan kondisi filter jika ada
-            End If
-
-            Dim da As OdbcDataAdapter
+            Dim query As String = "SELECT kodebarang, namabarang, hargabarang, jumlahbarang FROM barang WHERE jumlahbarang > 0" ' Hanya tampilkan yang stok > 0 di awal
             If filter <> "" Then
-                da = New OdbcDataAdapter(query, Conn)
-                da.SelectCommand.Parameters.AddWithValue("@kode", "%" & filter & "%")
-                da.SelectCommand.Parameters.AddWithValue("@nama", "%" & filter & "%")
-            Else
-                da = New OdbcDataAdapter(query, Conn)
+                query &= " AND (kodebarang LIKE ? OR namabarang LIKE ?)"
             End If
 
-            Dim dt As New DataTable
-            da.Fill(dt)
+            Using da As New OdbcDataAdapter(query, Conn)
+                If filter <> "" Then
+                    da.SelectCommand.Parameters.AddWithValue("@kode", "%" & filter & "%")
+                    da.SelectCommand.Parameters.AddWithValue("@nama", "%" & filter & "%")
+                End If
 
-            dgvProduk.Columns.Clear()
-            dgvProduk.DataSource = dt
-            dgvProduk.AllowUserToAddRows = False
+                Dim dt As New DataTable
+                da.Fill(dt)
 
-            ' Hapus kolom tombol jika sudah ada
-            If dgvProduk.Columns.Contains("TambahKeranjangColumn") Then dgvProduk.Columns.Remove("TambahKeranjangColumn")
+                ' Hitung jumlah item di keranjang untuk setiap produk
+                Dim keranjangLookup = keranjang.GroupBy(Function(item) item.KodeBarang).ToDictionary(Function(g) g.Key, Function(g) g.Sum(Function(item) item.JumlahBeli))
 
-            ' Kolom tombol Tambah ke Keranjang
-            Dim btnTambahKeranjang As New DataGridViewButtonColumn With {
-        .Name = "TambahKeranjangColumn",
-        .HeaderText = "",
-        .Text = "+",
-        .UseColumnTextForButtonValue = True,
-        .Width = 50,
-        .DefaultCellStyle = New DataGridViewCellStyle With {
-          .BackColor = If(dt.Rows.Count > 0, Color.LightSkyBlue, Color.LightGray), ' Set warna tombol berdasarkan ketersediaan stok (contoh)
-                    .ForeColor = Color.Black,
-          .Font = New Font("Segoe UI", 12, FontStyle.Bold),
-          .Alignment = DataGridViewContentAlignment.MiddleCenter,
-          .Padding = New Padding(2)
-        }
-      }
-            dgvProduk.Columns.Add(btnTambahKeranjang)
+                ' Buat DataTable baru untuk menampung produk yang akan ditampilkan
+                Dim dtFiltered As New DataTable
+                If dt.Columns.Count > 0 Then
+                    For Each col As DataColumn In dt.Columns
+                        dtFiltered.Columns.Add(col.ColumnName, col.DataType)
+                    Next
+                End If
 
-            ' Atur lebar kolom utama dan styling
-            AturStylingGrid()
+                ' Filter dan sesuaikan stok untuk ditampilkan
+                For Each rowData As DataRow In dt.Rows
+                    Dim kodeBarang As String = rowData("kodebarang").ToString()
+                    Dim stokDatabase As Integer
+                    Integer.TryParse(rowData("jumlahbarang").ToString(), stokDatabase)
+                    Dim jumlahDiKeranjang As Integer = If(keranjangLookup.ContainsKey(kodeBarang), keranjangLookup(kodeBarang), 0)
+                    Dim stokTersediaUntukDijual As Integer = stokDatabase - jumlahDiKeranjang
 
+                    If stokTersediaUntukDijual > 0 Then ' Hanya tambahkan ke tampilan jika masih ada stok tersedia
+                        Dim newRow As DataRow = dtFiltered.NewRow()
+                        For Each col As DataColumn In dt.Columns
+                            newRow(col.ColumnName) = rowData(col.ColumnName)
+                        Next
+                        newRow("jumlahbarang") = stokTersediaUntukDijual ' Tampilkan stok yang tersedia
+                        dtFiltered.Rows.Add(newRow)
+                    End If
+                Next
+
+                dgvProduk.DataSource = dtFiltered
+
+                ' Tambahkan kembali tombol Tambah ke Keranjang dan atur styling
+                If Not dgvProduk.Columns.Contains("TambahKeranjangColumn") Then TambahTombolKeranjang()
+                AturStylingGrid()
+            End Using
         Catch ex As Exception
             MessageBox.Show("Terjadi kesalahan: " & ex.Message)
         Finally
@@ -210,39 +215,28 @@ Public Class ucTrans
             Dim namaBarang As String = dgvProduk.Rows(e.RowIndex).Cells("namabarang").Value.ToString()
             Dim hargaBarang As Decimal
             Decimal.TryParse(dgvProduk.Rows(e.RowIndex).Cells("hargabarang").Value?.ToString(), hargaBarang)
-            Dim jumlahStok As Integer
-            Integer.TryParse(dgvProduk.Rows(e.RowIndex).Cells("jumlahbarang").Value?.ToString(), jumlahStok)
+            Dim jumlahStokTersediaAwal As Integer
+            Integer.TryParse(dgvProduk.Rows(e.RowIndex).Cells("jumlahbarang").Value?.ToString(), jumlahStokTersediaAwal)
 
-            If jumlahStok > 0 Then
-                Dim inputJumlah As String = InputBox($"Masukkan jumlah '{namaBarang}' yang ingin dibeli (Stok: {jumlahStok}):", "Masukkan Jumlah", "1")
+            If jumlahStokTersediaAwal > 0 Then
+                Dim inputJumlah As String = InputBox($"Masukkan jumlah '{namaBarang}' yang ingin dibeli (Stok Tersedia: {jumlahStokTersediaAwal}):", "Masukkan Jumlah", "1")
                 Dim jumlahBeli As Integer
-                If Integer.TryParse(inputJumlah, jumlahBeli) AndAlso jumlahBeli > 0 AndAlso jumlahBeli <= jumlahStok Then
-                    Dim newItem As New OrderItem With {
-            .KodeBarang = kodeBarang,
-            .NamaBarang = namaBarang,
-            .Harga = hargaBarang,
-            .JumlahBeli = jumlahBeli
-          }
-                    keranjang.Add(newItem)
-                    PerbaruiTampilanKeranjang()
-                    MessageBox.Show($"'{namaBarang}' ({jumlahBeli}) ditambahkan ke keranjang.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                    ' Kurangi stok di dgvProduk
-                    Dim newStok As Integer = jumlahStok - jumlahBeli
-                    dgvProduk.Rows(e.RowIndex).Cells("jumlahbarang").Value = newStok
-
-                    ' Hapus baris jika stok menjadi 0
-                    If newStok = 0 Then
-                        ' Gunakan BeginInvoke untuk menghindari error cross-threading jika diperlukan
-                        If dgvProduk.InvokeRequired Then
-                            dgvProduk.BeginInvoke(New MethodInvoker(Sub()
-                                                                        dgvProduk.Rows.RemoveAt(e.RowIndex)
-                                                                    End Sub))
-                        Else
-                            dgvProduk.Rows.RemoveAt(e.RowIndex)
-                        End If
+                If Integer.TryParse(inputJumlah, jumlahBeli) AndAlso jumlahBeli > 0 AndAlso jumlahBeli <= jumlahStokTersediaAwal Then
+                    Dim existingItem = keranjang.FirstOrDefault(Function(item) item.KodeBarang = kodeBarang)
+                    If existingItem IsNot Nothing Then
+                        existingItem.JumlahBeli += jumlahBeli
+                    Else
+                        Dim newItem As New OrderItem With {
+                        .KodeBarang = kodeBarang,
+                        .NamaBarang = namaBarang,
+                        .Harga = hargaBarang,
+                        .JumlahBeli = jumlahBeli
+                    }
+                        keranjang.Add(newItem)
                     End If
-
+                    PerbaruiTampilanKeranjang()
+                    TampilkanData() ' Refresh tampilan dgvProduk, akan menghilangkan jika stok tersedia menjadi 0
+                    MessageBox.Show($"'{namaBarang}' ({jumlahBeli}) ditambahkan ke keranjang.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 ElseIf Not String.IsNullOrEmpty(inputJumlah) Then
                     MessageBox.Show("Jumlah tidak valid atau melebihi stok.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
@@ -432,19 +426,9 @@ Public Class ucTrans
     ' Event handler untuk klik di DataGridView keranjang (untuk tombol Hapus)
     Private Sub dgvKeranjang_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvKeranjang.CellClick
         If e.RowIndex >= 0 AndAlso e.ColumnIndex = dgvKeranjang.Columns("HapusKeranjangColumn").Index Then
-            Dim itemToRemove As OrderItem = keranjang(e.RowIndex)
-            ' Kembalikan stok ke dgvProduk (cari berdasarkan kode barang)
-            For Each row As DataGridViewRow In
-                    dgvProduk.Rows
-                If row.Cells("kodebarang").Value.ToString() = itemToRemove.KodeBarang Then
-                    Dim currentStok As Integer
-                    Integer.TryParse(row.Cells("jumlahbarang").Value?.ToString(), currentStok)
-                    row.Cells("jumlahbarang").Value = currentStok + itemToRemove.JumlahBeli
-                    Exit For
-                End If
-            Next
             keranjang.RemoveAt(e.RowIndex)
             PerbaruiTampilanKeranjang()
+            TampilkanData() ' Refresh tampilan dgvProduk, akan menampilkan kembali produk jika stok tersedia > 0
         End If
     End Sub
 
@@ -598,6 +582,7 @@ Public Class ucTrans
         ' Tentukan apakah ada halaman lain untuk dicetak (biasanya False untuk struk sederhana)
         e.HasMorePages = False
     End Sub
+
 
     Private Sub SimpanTransaksiKeDatabase()
         Try
