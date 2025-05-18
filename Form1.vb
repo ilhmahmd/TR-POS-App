@@ -79,7 +79,7 @@ Public Class Form1
     End Sub
 
     Private Sub buttonlaporan_Click(sender As Object, e As EventArgs) Handles buttonlaporan.Click
-        Dim laporan As New ucLapor()
+        Dim laporan As New ucLaporanPenjualan()
         LoadKontenKontrol(laporan)
     End Sub
 
@@ -113,6 +113,23 @@ Public Class Form1
             FilterData2(keyword)
         End If
     End Sub
+
+    Private Sub txtCari_TextChanged3(sender As Object, e As EventArgs) Handles txtCari.TextChanged
+        Dim keyword As String = txtCari.Text.Trim()
+
+        For Each ctrl As Control In PanelMain.Controls
+            If TypeOf ctrl Is ucLaporanPenjualan Then
+                Dim laporan As ucLaporanPenjualan = CType(ctrl, ucLaporanPenjualan)
+                If keyword = "" Or keyword = "Cari disini..." Then
+                    laporan.ResetFilter3()
+                Else
+                    laporan.FilterData3(keyword)
+                End If
+                Exit For
+            End If
+        Next
+    End Sub
+
 
     Private Sub txtCari_KeyDown(sender As Object, e As KeyEventArgs) Handles txtCari.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -160,6 +177,16 @@ Public Class Form1
             If TypeOf ctrl Is ucTrans Then
                 Dim produk As ucTrans = CType(ctrl, ucTrans)
                 produk.TampilkanData() ' load data tanpa filter (full)
+                Exit For
+            End If
+        Next
+    End Sub
+
+    Private Sub ResetFilter3()
+        For Each ctrl As Control In PanelMain.Controls
+            If TypeOf ctrl Is ucLaporanPenjualan Then
+                Dim transaksi As ucLaporanPenjualan = CType(ctrl, ucLaporanPenjualan)
+                transaksi.TampilkanData() ' load data tanpa filter (full)
                 Exit For
             End If
         Next

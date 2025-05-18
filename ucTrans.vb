@@ -300,21 +300,27 @@ Public Class ucTrans
         If dgvProduk.Columns.Contains("TambahKeranjangColumn") Then dgvProduk.Columns.Remove("TambahKeranjangColumn")
 
         Dim btnTambahKeranjang As New DataGridViewButtonColumn With {
-            .Name = "TambahKeranjangColumn",
-            .HeaderText = "",
-            .Text = "+",
-            .UseColumnTextForButtonValue = True,
-            .Width = 50,
-            .DefaultCellStyle = New DataGridViewCellStyle With {
-                .BackColor = Color.LightSkyBlue,
-                .ForeColor = Color.Black,
-                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                .Alignment = DataGridViewContentAlignment.MiddleCenter,
-                .Padding = New Padding(2)
-            }
+        .Name = "TambahKeranjangColumn",
+        .HeaderText = "",
+        .Text = "+",
+        .UseColumnTextForButtonValue = True,
+        .Width = 70,
+        .DefaultCellStyle = New DataGridViewCellStyle With {
+            .BackColor = Color.LightSkyBlue,
+            .ForeColor = Color.Black,
+            .Font = New Font("Segoe UI", 11, FontStyle.Bold),
+            .Alignment = DataGridViewContentAlignment.MiddleCenter,
+            .Padding = New Padding(2)
         }
+    }
+
         dgvProduk.Columns.Add(btnTambahKeranjang)
+
+        ' Tambahan untuk memperbesar tinggi baris
+        dgvProduk.RowTemplate.Height = 40
+        dgvProduk.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
     End Sub
+
 
     ' Event handler untuk tombol Bayar
     Private Sub btnTunai_Click(sender As Object, e As EventArgs) Handles btnTunai.Click
@@ -607,9 +613,22 @@ Public Class ucTrans
         e.Graphics.DrawString($"{totalHargaUntukDicetak:N0}", fontBoldBody, Brushes.Black, totalValueX, y, New StringFormat With {.Alignment = StringAlignment.Far})
         y += fontBoldBody.GetHeight(e.Graphics) + 5
 
+        ' --- Informasi Tambahan untuk Tunai ---
+        If metodeBayarUntukDicetak.ToLower() = "tunai" Then
+            e.Graphics.DrawString($"Tunai", fontBody, Brushes.Black, totalLabelX, y)
+            e.Graphics.DrawString($"{jumlahTunaiUntukDicetak:N0}", fontBody, Brushes.Black, totalValueX, y, New StringFormat With {.Alignment = StringAlignment.Far})
+            y += yIncrement
+            e.Graphics.DrawString($"Kembali", fontBoldBody, Brushes.Black, totalLabelX, y)
+            e.Graphics.DrawString($"{kembalianUntukDicetak:N0}", fontBoldBody, Brushes.Black, totalValueX, y, New StringFormat With {.Alignment = StringAlignment.Far})
+            y += yIncrement + 5
+        Else
+            ' Beri sedikit spasi jika bukan tunai
+            y += 5
+        End If
+
         ' --- Metode Pembayaran ---
         e.Graphics.DrawString($"Bayar : {metodeBayarUntukDicetak}", fontBody, Brushes.Black, xLeft, y)
-        y += yIncrement + 5
+        y += yIncrement + 30 ' Tambahkan spasi sebelum pesan penutup (2 baris perkiraan)
 
         ' --- Pesan Penutup ---
         Dim pesan As String = "Terima Kasih telah Berbelanja!"

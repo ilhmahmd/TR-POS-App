@@ -28,6 +28,7 @@ Partial Class ucProduk
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.dgvProduk = New System.Windows.Forms.DataGridView()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.dgvProduk, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -71,10 +72,23 @@ Partial Class ucProduk
         Me.dgvProduk.Size = New System.Drawing.Size(881, 357)
         Me.dgvProduk.TabIndex = 5
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label3.Location = New System.Drawing.Point(-14, 84)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(18, 25)
+        Me.Label3.TabIndex = 6
+        Me.Label3.Text = "|"
+        '
         'ucProduk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.dgvProduk)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label2)
@@ -91,4 +105,5 @@ Partial Class ucProduk
     Friend WithEvents Label2 As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents dgvProduk As DataGridView
+    Friend WithEvents Label3 As Label
 End Class
