@@ -105,7 +105,7 @@ Partial Class Form1
         Me.txtCari.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.txtCari.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtCari.ForeColor = System.Drawing.Color.Gray
-        Me.txtCari.Location = New System.Drawing.Point(256, 41)
+        Me.txtCari.Location = New System.Drawing.Point(443, 43)
         Me.txtCari.Margin = New System.Windows.Forms.Padding(6)
         Me.txtCari.MaxLength = 20
         Me.txtCari.Name = "txtCari"
@@ -332,7 +332,7 @@ Partial Class Form1
         'PictureBox2
         '
         Me.PictureBox2.Image = Global.TR_POS_App.My.Resources.Resources.sc2
-        Me.PictureBox2.Location = New System.Drawing.Point(240, 26)
+        Me.PictureBox2.Location = New System.Drawing.Point(427, 28)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(262, 50)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage

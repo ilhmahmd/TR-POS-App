@@ -107,7 +107,7 @@ Public Class Form1
         Dim keyword As String = txtCari.Text.Trim()
 
         ' Jika textbox kosong, tampilkan data full
-        If keyword = "" Or keyword = "Cari disini..." Then
+        If keyword = "" Or keyword = "Cari disini" Then
             ResetFilter2()
         Else
             FilterData2(keyword)
@@ -120,7 +120,7 @@ Public Class Form1
         For Each ctrl As Control In PanelMain.Controls
             If TypeOf ctrl Is ucLaporanPenjualan Then
                 Dim laporan As ucLaporanPenjualan = CType(ctrl, ucLaporanPenjualan)
-                If keyword = "" Or keyword = "Cari disini..." Then
+                If keyword = "" Or keyword = "Cari disini" Then
                     laporan.ResetFilter3()
                 Else
                     laporan.FilterData3(keyword)
@@ -129,6 +129,26 @@ Public Class Form1
             End If
         Next
     End Sub
+
+    Private Sub txtCari_TextChanged4(sender As Object, e As EventArgs) Handles txtCari.TextChanged
+        Dim keyword As String = txtCari.Text.Trim()
+
+        For Each ctrl As Control In PanelMain.Controls
+            If TypeOf ctrl Is ucAdmin Then
+                Dim admin As ucAdmin = CType(ctrl, ucAdmin)
+
+                If keyword = "" Or keyword = "Cari disini" Then
+                    admin.TampilkanData()
+                Else
+                    admin.FilterData(keyword)
+                End If
+
+                Exit For
+            End If
+        Next
+    End Sub
+
+
 
 
     Private Sub txtCari_KeyDown(sender As Object, e As KeyEventArgs) Handles txtCari.KeyDown
@@ -192,7 +212,14 @@ Public Class Form1
         Next
     End Sub
 
+
+
     Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
 
+    End Sub
+
+    Private Sub buttonuser_Click(sender As Object, e As EventArgs) Handles buttonuser.Click
+        Dim admin As New ucAdmin()
+        LoadKontenKontrol(admin)
     End Sub
 End Class

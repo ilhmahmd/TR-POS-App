@@ -38,14 +38,14 @@ Public Class ucTrans
 
         ' Styling umum untuk cell
         With dgvKeranjang.DefaultCellStyle
-            .Font = New Font("Segoe UI", 8, FontStyle.Regular)
+            .Font = New Font("Segoe UI", 9, FontStyle.Regular)
             .Alignment = DataGridViewContentAlignment.MiddleLeft
         End With
 
         ' Kolom Nama Barang
         Dim colNamaBarang As New DataGridViewTextBoxColumn()
         colNamaBarang.DataPropertyName = "NamaBarang"
-        colNamaBarang.HeaderText = "Nama Barang"
+        colNamaBarang.HeaderText = "Barang"
         colNamaBarang.ReadOnly = True
         colNamaBarang.Width = 120 ' Sesuaikan dengan lebar kolom Nama Barang di dgvProduk
         dgvKeranjang.Columns.Add(colNamaBarang)
@@ -164,12 +164,12 @@ Public Class ucTrans
             ' Atur lebar kolom
             If .Columns.Contains("kodebarang") Then
                 .Columns("kodebarang").Width = 80
-                .Columns("kodebarang").HeaderText = "Kode Barang"
+                .Columns("kodebarang").HeaderText = "Kode"
                 .Columns("kodebarang").ReadOnly = True
             End If
             If .Columns.Contains("namabarang") Then
                 .Columns("namabarang").Width = 190
-                .Columns("namabarang").HeaderText = "Nama Barang"
+                .Columns("namabarang").HeaderText = "Nama"
                 .Columns("namabarang").ReadOnly = True
             End If
             If .Columns.Contains("hargabarang") Then
@@ -189,13 +189,14 @@ Public Class ucTrans
             End If
 
             ' Style header
-            .ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+            .ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 10, FontStyle.Bold)
             .ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke
             .EnableHeadersVisualStyles = False
 
             ' Style isi cell
-            .DefaultCellStyle.Font = New Font("Segoe UI", 8, FontStyle.Regular)
+            .DefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
+            .AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
             .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
             .RowTemplate.Height = 35
 
