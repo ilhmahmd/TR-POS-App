@@ -29,6 +29,7 @@ Partial Class FormAdmin
 
 
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormAdmin))
         Me.txtKode = New System.Windows.Forms.TextBox()
         Me.txtNama = New System.Windows.Forms.TextBox()
         Me.txtPassword = New System.Windows.Forms.TextBox()
@@ -96,6 +97,7 @@ Partial Class FormAdmin
         Me.Controls.Add(Me.cmbLevel)
         Me.Controls.Add(Me.btnSimpan)
         Me.Controls.Add(Me.btnBatal)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormAdmin"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FormAdmin"

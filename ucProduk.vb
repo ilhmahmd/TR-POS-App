@@ -3,21 +3,28 @@
 Public Class ucProduk
 
     ' Menampilkan data produk ke dalam DataGridView
-    Sub TampilkanData(Optional filter As String = "")
+    Sub TampilkanData(Optional filter As String = "", Optional tipeFilter As String = "")
         Try
             Call Koneksi()
-            Dim query As String = "SELECT * FROM barang"
+            Dim query As String = "SELECT * FROM barang WHERE 1=1"
+
             If filter <> "" Then
-                query &= " WHERE kodebarang LIKE ? OR namabarang LIKE ?"
+                query &= " AND (kodebarang LIKE ? OR namabarang LIKE ?)"
             End If
 
-            Dim da As OdbcDataAdapter
+            If tipeFilter <> "" Then
+                query &= " AND tipebarang = ?"
+            End If
+
+            Dim da As New OdbcDataAdapter(query, Conn)
+
             If filter <> "" Then
-                da = New OdbcDataAdapter(query, Conn)
                 da.SelectCommand.Parameters.AddWithValue("@kode", "%" & filter & "%")
                 da.SelectCommand.Parameters.AddWithValue("@nama", "%" & filter & "%")
-            Else
-                da = New OdbcDataAdapter(query, Conn)
+            End If
+
+            If tipeFilter <> "" Then
+                da.SelectCommand.Parameters.AddWithValue("@tipe", tipeFilter)
             End If
 
             Dim dt As New DataTable
@@ -33,40 +40,39 @@ Public Class ucProduk
 
             ' Kolom tombol Edit
             Dim btnEdit As New DataGridViewButtonColumn With {
-                .Name = "EditColumn",
-                .HeaderText = "",
-                .Text = "Edit",
-                .UseColumnTextForButtonValue = True,
-                .Width = 90,
-                .DefaultCellStyle = New DataGridViewCellStyle With {
-                        .BackColor = Color.LightGreen,
-                        .ForeColor = Color.Black,
-                        .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                        .Alignment = DataGridViewContentAlignment.MiddleCenter,
-                        .Padding = New Padding(2)
-                 }
+            .Name = "EditColumn",
+            .HeaderText = "",
+            .Text = "Edit",
+            .UseColumnTextForButtonValue = True,
+            .Width = 90,
+            .DefaultCellStyle = New DataGridViewCellStyle With {
+                .BackColor = Color.LightGreen,
+                .ForeColor = Color.Black,
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .Alignment = DataGridViewContentAlignment.MiddleCenter,
+                .Padding = New Padding(2)
             }
+        }
             dgvProduk.Columns.Add(btnEdit)
 
             ' Kolom tombol Hapus
             Dim btnHapus As New DataGridViewButtonColumn With {
-                .Name = "HapusColumn",
-                .HeaderText = "",
-                .Text = "Hapus",
-                .UseColumnTextForButtonValue = True,
-                .Width = 90,
-                .DefaultCellStyle = New DataGridViewCellStyle With {
-                    .BackColor = Color.IndianRed,
-                    .ForeColor = Color.White,
-                    .Font = New Font("Segoe UI", 9, FontStyle.Bold),
-                    .Alignment = DataGridViewContentAlignment.MiddleCenter,
-                    .Padding = New Padding(2)
-                }
+            .Name = "HapusColumn",
+            .HeaderText = "",
+            .Text = "Hapus",
+            .UseColumnTextForButtonValue = True,
+            .Width = 90,
+            .DefaultCellStyle = New DataGridViewCellStyle With {
+                .BackColor = Color.IndianRed,
+                .ForeColor = Color.White,
+                .Font = New Font("Segoe UI", 9, FontStyle.Bold),
+                .Alignment = DataGridViewContentAlignment.MiddleCenter,
+                .Padding = New Padding(2)
             }
+        }
             dgvProduk.Columns.Add(btnHapus)
 
-
-            ' Atur lebar kolom utama dan styling
+            ' Format tampilan DataGridView
             With dgvProduk
                 For Each col As DataGridViewColumn In dgvProduk.Columns
                     col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -77,28 +83,27 @@ Public Class ucProduk
                 .ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
                 .RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
 
-                .ColumnHeadersHeight = 40 ' misal 40 pixel, sesuaikan dengan kebutuhan
+                .ColumnHeadersHeight = 40
                 .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
 
-                ' Atur lebar kolom
-                .Columns("kodebarang").Width = 140
+                ' Lebar kolom dan header
+                .Columns("kodebarang").Width = 80
                 .Columns("namabarang").Width = 200
+                .Columns("tipebarang").Width = 120
                 .Columns("hargabarang").Width = 150
-                .Columns("jumlahbarang").Width = 150
+                .Columns("jumlahbarang").Width = 90
 
-                ' Ubah header text sesuai keinginan, tidak perlu sesuai nama kolom DB
                 .Columns("kodebarang").HeaderText = "Kode Barang"
                 .Columns("namabarang").HeaderText = "Nama Barang"
+                .Columns("tipebarang").HeaderText = "Tipe"
                 .Columns("hargabarang").HeaderText = "Harga"
                 .Columns("jumlahbarang").HeaderText = "Jumlah Stok"
 
-                ' Style header
                 .ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 10, FontStyle.Bold)
                 .ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                 .ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke
                 .EnableHeadersVisualStyles = False
 
-                ' Style isi cell
                 .DefaultCellStyle.Font = New Font("Segoe UI", 10, FontStyle.Regular)
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
                 .RowTemplate.Height = 35
@@ -106,11 +111,9 @@ Public Class ucProduk
                 .Columns("hargabarang").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                 .Columns("jumlahbarang").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
-
                 .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
                 .AllowUserToResizeColumns = True
             End With
-
 
         Catch ex As Exception
             MessageBox.Show("Terjadi kesalahan: " & ex.Message)
@@ -119,9 +122,11 @@ Public Class ucProduk
         End Try
     End Sub
 
+
     ' Saat UserControl dimuat
     Private Sub ucProduk_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TampilkanData()
+        IsiComboBoxTipe()
     End Sub
 
     ' Event klik tombol Edit / Hapus
@@ -275,12 +280,16 @@ Public Class ucProduk
 
             ' Atur lebar kolom sesuai kolom yang ada
             If .Columns.Contains("kodebarang") Then
-                .Columns("kodebarang").Width = 140
+                .Columns("kodebarang").Width = 80
                 .Columns("kodebarang").HeaderText = "Kode Barang"
             End If
             If .Columns.Contains("namabarang") Then
                 .Columns("namabarang").Width = 200
                 .Columns("namabarang").HeaderText = "Nama Barang"
+            End If
+            If .Columns.Contains("tipebarang") Then
+                .Columns("tipebarang").Width = 120
+                .Columns("tipebarang").HeaderText = "Tipe"
             End If
             If .Columns.Contains("hargabarang") Then
                 .Columns("hargabarang").Width = 150
@@ -288,7 +297,7 @@ Public Class ucProduk
                 .Columns("hargabarang").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             End If
             If .Columns.Contains("jumlahbarang") Then
-                .Columns("jumlahbarang").Width = 150
+                .Columns("jumlahbarang").Width = 90
                 .Columns("jumlahbarang").HeaderText = "Jumlah Stok"
                 .Columns("jumlahbarang").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             End If
@@ -305,6 +314,73 @@ Public Class ucProduk
             .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
             .AllowUserToResizeColumns = True
         End With
+    End Sub
+
+    Private Sub IsiComboBoxTipe()
+        Try
+            Call Koneksi()
+            Dim query As String = "SELECT DISTINCT tipebarang FROM barang"
+            Dim cmd As New OdbcCommand(query, Conn)
+            Dim reader = cmd.ExecuteReader()
+
+            cbTipe.Items.Clear()
+            cbTipe.Items.Add("- Tipe -") ' default
+
+            While reader.Read()
+                cbTipe.Items.Add(reader("tipebarang").ToString())
+            End While
+
+            cbTipe.SelectedIndex = 0 ' set default
+        Catch ex As Exception
+            MessageBox.Show("Error isi ComboBox: " & ex.Message)
+        Finally
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
+    End Sub
+
+
+
+    Private Sub cmbLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbTipe.SelectedIndexChanged
+        Dim selectedLevel As String = cbTipe.SelectedItem?.ToString()
+        If selectedLevel = "- Level -" Then
+            TampilkanData2()
+        Else
+            TampilkanData2(selectedLevel)
+        End If
+    End Sub
+
+    Public Sub TampilkanData2(Optional filtertipe As String = "")
+        Try
+            Call Koneksi()
+            Dim query As String = "SELECT * FROM barang"
+            If filtertipe <> "" And filtertipe <> "- Tipe -" Then
+                query &= " WHERE tipebarang = ?"
+            End If
+
+            Dim da As OdbcDataAdapter
+            If filtertipe <> "" And filtertipe <> "- Tipe -" Then
+                da = New OdbcDataAdapter(query, Conn)
+                da.SelectCommand.Parameters.AddWithValue("@tipe", filtertipe)
+            Else
+                da = New OdbcDataAdapter(query, Conn)
+            End If
+
+            Dim dt As New DataTable
+            da.Fill(dt)
+
+            dgvProduk.Columns.Clear()
+            dgvProduk.DataSource = dt
+            dgvProduk.AllowUserToAddRows = False
+
+            ' Panggil styling dan tombol agar tampil sama persis
+            AturStylingGrid()
+            TambahTombolEditHapus()
+
+        Catch ex As Exception
+            MessageBox.Show("Error tampil data: " & ex.Message)
+        Finally
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
     End Sub
 
 End Class

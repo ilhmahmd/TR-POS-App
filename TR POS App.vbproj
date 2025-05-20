@@ -306,5 +306,23 @@
   <ItemGroup>
     <None Include="sc2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rec.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="inc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="kl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pattern.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pt.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

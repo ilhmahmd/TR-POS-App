@@ -33,8 +33,10 @@ Partial Class ucTrans
         Me.btnTunai = New System.Windows.Forms.Button()
         Me.btnQRIS = New System.Windows.Forms.Button()
         Me.btnTransfer = New System.Windows.Forms.Button()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         CType(Me.dgvProduk, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvKeranjang, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label2
@@ -152,11 +154,22 @@ Partial Class ucTrans
         Me.btnTransfer.Text = "Transfer"
         Me.btnTransfer.UseVisualStyleBackColor = True
         '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = Global.TR_POS_App.My.Resources.Resources.pattern
+        Me.PictureBox7.Location = New System.Drawing.Point(762, -89)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(177, 184)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox7.TabIndex = 16
+        Me.PictureBox7.TabStop = False
+        '
         'ucTrans
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.PictureBox7)
         Me.Controls.Add(Me.btnTransfer)
         Me.Controls.Add(Me.btnQRIS)
         Me.Controls.Add(Me.btnTunai)
@@ -172,6 +185,7 @@ Partial Class ucTrans
         Me.Size = New System.Drawing.Size(993, 535)
         CType(Me.dgvProduk, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvKeranjang, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -188,4 +202,5 @@ Partial Class ucTrans
     Friend WithEvents btnTunai As Button
     Friend WithEvents btnQRIS As Button
     Friend WithEvents btnTransfer As Button
+    Friend WithEvents PictureBox7 As PictureBox
 End Class

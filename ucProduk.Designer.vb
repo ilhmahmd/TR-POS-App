@@ -28,7 +28,10 @@ Partial Class ucProduk
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.dgvProduk = New System.Windows.Forms.DataGridView()
+        Me.cbTipe = New System.Windows.Forms.ComboBox()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         CType(Me.dgvProduk, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -55,7 +58,7 @@ Partial Class ucProduk
         'Button1
         '
         Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(858, 54)
+        Me.Button1.Location = New System.Drawing.Point(858, 73)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 34)
         Me.Button1.TabIndex = 4
@@ -66,16 +69,39 @@ Partial Class ucProduk
         '
         Me.dgvProduk.BackgroundColor = System.Drawing.Color.White
         Me.dgvProduk.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvProduk.Location = New System.Drawing.Point(51, 108)
+        Me.dgvProduk.Location = New System.Drawing.Point(51, 119)
         Me.dgvProduk.Name = "dgvProduk"
         Me.dgvProduk.Size = New System.Drawing.Size(881, 357)
         Me.dgvProduk.TabIndex = 5
+        '
+        'cbTipe
+        '
+        Me.cbTipe.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.cbTipe.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cbTipe.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbTipe.FormattingEnabled = True
+        Me.cbTipe.Location = New System.Drawing.Point(53, 82)
+        Me.cbTipe.Name = "cbTipe"
+        Me.cbTipe.Size = New System.Drawing.Size(111, 25)
+        Me.cbTipe.TabIndex = 11
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = Global.TR_POS_App.My.Resources.Resources.pattern
+        Me.PictureBox7.Location = New System.Drawing.Point(953, 217)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(177, 184)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox7.TabIndex = 13
+        Me.PictureBox7.TabStop = False
         '
         'ucProduk
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.PictureBox7)
+        Me.Controls.Add(Me.cbTipe)
         Me.Controls.Add(Me.dgvProduk)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label2)
@@ -83,6 +109,7 @@ Partial Class ucProduk
         Me.Name = "ucProduk"
         Me.Size = New System.Drawing.Size(993, 535)
         CType(Me.dgvProduk, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -92,4 +119,6 @@ Partial Class ucProduk
     Friend WithEvents Label2 As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents dgvProduk As DataGridView
+    Friend WithEvents cbTipe As ComboBox
+    Friend WithEvents PictureBox7 As PictureBox
 End Class

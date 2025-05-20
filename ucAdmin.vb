@@ -125,6 +125,7 @@ Public Class ucAdmin
 
     Private Sub ucAdmin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TampilkanData()
+        IsiComboBoxLevel()
     End Sub
 
     Private Sub dgvAdmin_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvAdmin.CellClick
@@ -196,8 +197,71 @@ Public Class ucAdmin
     End Sub
 
 
+    Private Sub IsiComboBoxLevel()
+        Try
+            Call Koneksi()
+            Dim query As String = "SELECT DISTINCT leveladmin FROM admin"
+            Dim cmd As New OdbcCommand(query, Conn)
+            Dim reader = cmd.ExecuteReader()
+
+            cmbLevel.Items.Clear()
+            cmbLevel.Items.Add("- Level -") ' default
+
+            While reader.Read()
+                cmbLevel.Items.Add(reader("leveladmin").ToString())
+            End While
+
+            cmbLevel.SelectedIndex = 0 ' set default
+        Catch ex As Exception
+            MessageBox.Show("Error isi ComboBox: " & ex.Message)
+        Finally
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
+    End Sub
 
 
 
+    Private Sub cmbLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbLevel.SelectedIndexChanged
+        Dim selectedLevel As String = cmbLevel.SelectedItem?.ToString()
+        If selectedLevel = "- Level -" Then
+            TampilkanData2()
+        Else
+            TampilkanData2(selectedLevel)
+        End If
+    End Sub
+
+    Public Sub TampilkanData2(Optional filterLevel As String = "")
+        Try
+            Call Koneksi()
+            Dim query As String = "SELECT * FROM admin"
+            If filterLevel <> "" And filterLevel <> "- Level -" Then
+                query &= " WHERE leveladmin = ?"
+            End If
+
+            Dim da As OdbcDataAdapter
+            If filterLevel <> "" And filterLevel <> "- Level -" Then
+                da = New OdbcDataAdapter(query, Conn)
+                da.SelectCommand.Parameters.AddWithValue("@level", filterLevel)
+            Else
+                da = New OdbcDataAdapter(query, Conn)
+            End If
+
+            Dim dt As New DataTable
+            da.Fill(dt)
+
+            dgvAdmin.Columns.Clear()
+            dgvAdmin.DataSource = dt
+            dgvAdmin.AllowUserToAddRows = False
+
+            ' Panggil styling dan tombol agar tampil sama persis
+            AturStylingGrid()
+            TambahTombolEditHapus()
+
+        Catch ex As Exception
+            MessageBox.Show("Error tampil data: " & ex.Message)
+        Finally
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
+    End Sub
 
 End Class

@@ -3,7 +3,7 @@
 Public Class Form1
 
     Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles txtCari.Enter
-        If txtCari.Text = "Cari disini..." Then
+        If txtCari.Text = "Cari disini" Then
             txtCari.Text = ""
             txtCari.ForeColor = Color.Black
         End If
@@ -11,7 +11,7 @@ Public Class Form1
 
     Private Sub RichTextBox1_Leave(sender As Object, e As EventArgs) Handles txtCari.Leave
         If String.IsNullOrWhiteSpace(txtCari.Text) Then
-            txtCari.Text = "Cari disini..."
+            txtCari.Text = "Cari disini"
             txtCari.ForeColor = Color.Gray
         End If
     End Sub
@@ -96,7 +96,7 @@ Public Class Form1
         Dim keyword As String = txtCari.Text.Trim()
 
         ' Jika textbox kosong, tampilkan data full
-        If keyword = "" Or keyword = "Cari disini..." Then
+        If keyword = "" Or keyword = "Cari disini" Then
             ResetFilter()
         Else
             FilterData(keyword)

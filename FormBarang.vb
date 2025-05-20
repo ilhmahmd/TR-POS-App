@@ -5,6 +5,7 @@ Public Class FormBarang
     Private TableLayoutPanel1 As New TableLayoutPanel()
     Private txtKode As New TextBox()
     Private txtNama As New TextBox()
+    Private txtTipe As New TextBox()
     Private txtHarga As New TextBox()
     Private txtJumlah As New TextBox()
     Private btnSimpan As New Button()
@@ -19,8 +20,8 @@ Public Class FormBarang
     Private Sub FormBarang_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = If(ModeEdit, "Edit Barang", "Tambah Barang")
         Me.Font = New Font("Segoe UI", 9)
-        Me.AutoSize = False
-        Me.Size = New Size(300, 220) ' Ukuran form yang lebih kecil
+        Me.AutoSize = True
+        Me.Size = New Size(300, 250) ' Ukuran form yang lebih kecil
         Me.StartPosition = FormStartPosition.CenterScreen ' Muncul di tengah layar
 
         ' Setup layout
@@ -39,7 +40,7 @@ Public Class FormBarang
     Private Sub SetupLayout()
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.ColumnCount = 2
-        TableLayoutPanel1.RowCount = 5
+        TableLayoutPanel1.RowCount = 6
         TableLayoutPanel1.Padding = New Padding(10)
         TableLayoutPanel1.AutoSize = True
         TableLayoutPanel1.MaximumSize = New Size(280, 0)
@@ -55,6 +56,7 @@ Public Class FormBarang
         TableLayoutPanel1.RowStyles.Clear()
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize)) ' Kode Barang
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize)) ' Nama Barang
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize)) ' Tipe Barang
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize)) ' Harga Barang
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.AutoSize)) ' Jumlah Barang
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 40)) ' Baris Tombol dengan tinggi tetap
@@ -62,8 +64,9 @@ Public Class FormBarang
         ' Input fields
         AddInput("Kode Barang", txtKode, 0)
         AddInput("Nama Barang", txtNama, 1)
-        AddInput("Harga Barang", txtHarga, 2)
-        AddInput("Jumlah Barang", txtJumlah, 3)
+        AddInput("Tipe Barang", txtTipe, 2)
+        AddInput("Harga Barang", txtHarga, 3)
+        AddInput("Jumlah Barang", txtJumlah, 4)
 
         ' Tombol simpan & batal
         Dim panelTombol As New FlowLayoutPanel With {
@@ -89,7 +92,7 @@ Public Class FormBarang
 
         panelTombol.Controls.Add(btnBatal)
         panelTombol.Controls.Add(btnSimpan)
-        TableLayoutPanel1.Controls.Add(panelTombol, 0, 4)
+        TableLayoutPanel1.Controls.Add(panelTombol, 0, 5)
         TableLayoutPanel1.SetColumnSpan(panelTombol, 2)
 
         Me.Controls.Add(TableLayoutPanel1)
@@ -119,6 +122,7 @@ Public Class FormBarang
             If Rd.Read() Then
                 txtKode.Text = Rd("kodebarang").ToString()
                 txtNama.Text = Rd("namabarang").ToString()
+                txtTipe.Text = Rd("tipebarang").ToString()
                 txtHarga.Text = Rd("hargabarang").ToString()
                 txtJumlah.Text = Rd("jumlahbarang").ToString()
             End If
@@ -134,6 +138,7 @@ Public Class FormBarang
     Private Sub ClearForm()
         txtKode.Text = ""
         txtNama.Text = ""
+        txtTipe.Text = ""
         txtHarga.Text = ""
         txtJumlah.Text = ""
         txtKode.Enabled = True
@@ -150,8 +155,9 @@ Public Class FormBarang
             Call Koneksi()
             If ModeEdit Then
                 ' Update
-                Cmd = New OdbcCommand("UPDATE barang SET namabarang=?, hargabarang=?, jumlahbarang=? WHERE kodebarang=?", Conn)
+                Cmd = New OdbcCommand("UPDATE barang SET namabarang=?, tipebarang=?, hargabarang=?, jumlahbarang=? WHERE kodebarang=?", Conn)
                 Cmd.Parameters.AddWithValue("?", txtNama.Text)
+                Cmd.Parameters.AddWithValue("?", txtTipe.Text)
                 Cmd.Parameters.AddWithValue("?", txtHarga.Text)
                 Cmd.Parameters.AddWithValue("?", txtJumlah.Text)
                 Cmd.Parameters.AddWithValue("?", txtKode.Text)
@@ -159,9 +165,10 @@ Public Class FormBarang
                 MessageBox.Show("Data berhasil diperbarui.")
             Else
                 ' Insert
-                Cmd = New OdbcCommand("INSERT INTO barang VALUES (?, ?, ?, ?)", Conn)
+                Cmd = New OdbcCommand("INSERT INTO barang (kodebarang, namabarang, tipebarang, hargabarang, jumlahbarang) VALUES (?, ?, ?, ?, ?)", Conn)
                 Cmd.Parameters.AddWithValue("?", txtKode.Text)
                 Cmd.Parameters.AddWithValue("?", txtNama.Text)
+                Cmd.Parameters.AddWithValue("?", txtTipe.Text)
                 Cmd.Parameters.AddWithValue("?", txtHarga.Text)
                 Cmd.Parameters.AddWithValue("?", txtJumlah.Text)
                 Cmd.ExecuteNonQuery()

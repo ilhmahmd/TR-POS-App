@@ -32,6 +32,7 @@ Partial Class login
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -41,9 +42,10 @@ Partial Class login
         'TextBox1
         '
         Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox1.Location = New System.Drawing.Point(122, 193)
+        Me.TextBox1.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(122, 191)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(211, 13)
+        Me.TextBox1.Size = New System.Drawing.Size(211, 18)
         Me.TextBox1.TabIndex = 5
         '
         'Label1
@@ -69,10 +71,11 @@ Partial Class login
         'TextBox2
         '
         Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox2.Font = New System.Drawing.Font("Segoe UI Semibold", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox2.Location = New System.Drawing.Point(122, 265)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.TextBox2.Size = New System.Drawing.Size(211, 13)
+        Me.TextBox2.Size = New System.Drawing.Size(211, 16)
         Me.TextBox2.TabIndex = 12
         '
         'Button1
@@ -133,12 +136,24 @@ Partial Class login
         Me.PictureBox3.TabIndex = 11
         Me.PictureBox3.TabStop = False
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.SystemColors.AppWorkspace
+        Me.Label3.Location = New System.Drawing.Point(105, 412)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(238, 15)
+        Me.Label3.TabIndex = 17
+        Me.Label3.Text = "© 2025 Ilham Ahmad. All Rights Reserved"
+        '
         'login
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TextBox2)
@@ -170,4 +185,5 @@ Partial Class login
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents PictureBox4 As PictureBox
     Friend WithEvents Button1 As Button
+    Friend WithEvents Label3 As Label
 End Class

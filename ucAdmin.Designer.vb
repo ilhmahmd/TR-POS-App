@@ -26,14 +26,17 @@ Partial Class ucAdmin
         Me.btnTambah = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.cmbLevel = New System.Windows.Forms.ComboBox()
+        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         CType(Me.dgvAdmin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvAdmin
         '
         Me.dgvAdmin.BackgroundColor = System.Drawing.Color.White
         Me.dgvAdmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvAdmin.Location = New System.Drawing.Point(51, 108)
+        Me.dgvAdmin.Location = New System.Drawing.Point(47, 123)
         Me.dgvAdmin.Name = "dgvAdmin"
         Me.dgvAdmin.Size = New System.Drawing.Size(881, 357)
         Me.dgvAdmin.TabIndex = 8
@@ -41,7 +44,7 @@ Partial Class ucAdmin
         'btnTambah
         '
         Me.btnTambah.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnTambah.Location = New System.Drawing.Point(858, 54)
+        Me.btnTambah.Location = New System.Drawing.Point(853, 78)
         Me.btnTambah.Name = "btnTambah"
         Me.btnTambah.Size = New System.Drawing.Size(75, 34)
         Me.btnTambah.TabIndex = 7
@@ -69,11 +72,34 @@ Partial Class ucAdmin
         Me.Label2.TabIndex = 9
         Me.Label2.Text = "|"
         '
+        'cmbLevel
+        '
+        Me.cmbLevel.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.cmbLevel.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmbLevel.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbLevel.FormattingEnabled = True
+        Me.cmbLevel.Location = New System.Drawing.Point(48, 87)
+        Me.cmbLevel.Name = "cmbLevel"
+        Me.cmbLevel.Size = New System.Drawing.Size(111, 25)
+        Me.cmbLevel.TabIndex = 10
+        '
+        'PictureBox7
+        '
+        Me.PictureBox7.Image = Global.TR_POS_App.My.Resources.Resources.pattern
+        Me.PictureBox7.Location = New System.Drawing.Point(156, -112)
+        Me.PictureBox7.Name = "PictureBox7"
+        Me.PictureBox7.Size = New System.Drawing.Size(177, 184)
+        Me.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox7.TabIndex = 13
+        Me.PictureBox7.TabStop = False
+        '
         'ucAdmin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.PictureBox7)
+        Me.Controls.Add(Me.cmbLevel)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.dgvAdmin)
         Me.Controls.Add(Me.btnTambah)
@@ -81,6 +107,7 @@ Partial Class ucAdmin
         Me.Name = "ucAdmin"
         Me.Size = New System.Drawing.Size(993, 535)
         CType(Me.dgvAdmin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -90,4 +117,6 @@ Partial Class ucAdmin
     Friend WithEvents btnTambah As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents cmbLevel As ComboBox
+    Friend WithEvents PictureBox7 As PictureBox
 End Class
