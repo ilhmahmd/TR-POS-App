@@ -191,6 +191,15 @@ Public Class ucDasbor
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        End
+        Dim result As DialogResult = MessageBox.Show(
+        "Yakin keluar aplikasi?",
+        "Exit App",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question
+    )
+
+        If result = DialogResult.Yes Then
+            End
+        End If
     End Sub
 End Class

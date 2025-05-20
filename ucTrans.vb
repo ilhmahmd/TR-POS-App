@@ -30,7 +30,7 @@ Public Class ucTrans
 
         ' Styling umum untuk header
         With dgvKeranjang.ColumnHeadersDefaultCellStyle
-            .Font = New Font("Segoe UI", 9, FontStyle.Bold)
+            .Font = New Font("Segoe UI", 10, FontStyle.Bold)
             .Alignment = DataGridViewContentAlignment.MiddleCenter
             .BackColor = Color.WhiteSmoke
         End With
@@ -38,7 +38,7 @@ Public Class ucTrans
 
         ' Styling umum untuk cell
         With dgvKeranjang.DefaultCellStyle
-            .Font = New Font("Segoe UI", 9, FontStyle.Regular)
+            .Font = New Font("Segoe UI", 10, FontStyle.Regular)
             .Alignment = DataGridViewContentAlignment.MiddleLeft
         End With
 
@@ -195,7 +195,7 @@ Public Class ucTrans
             .EnableHeadersVisualStyles = False
 
             ' Style isi cell
-            .DefaultCellStyle.Font = New Font("Segoe UI", 9, FontStyle.Regular)
+            .DefaultCellStyle.Font = New Font("Segoe UI", 10, FontStyle.Regular)
             .AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
             .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
             .RowTemplate.Height = 35
